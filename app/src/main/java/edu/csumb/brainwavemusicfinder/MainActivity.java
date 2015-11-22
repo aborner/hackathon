@@ -61,16 +61,13 @@ public class MainActivity extends Activity implements
             public void onClick(View v) {
                 moodState = (TextView) findViewById(R.id.textView);
                 moodState.setText(mood);
-                if (mood.equals("meditation")) {
+                if (mood.equals("engagement")) {
                     img.setImageResource(R.drawable.meditation);
                 } else if (mood.equals("happy")) {
                     img.setImageResource(R.drawable.happy);
                 }
             }
         });
-
-
-
 
     }
 
