@@ -11,6 +11,63 @@
 
     <TextView android:text="Hello World!" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2" />
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/pauseButton"
+        android:layout_alignEnd="@+id/pauseButton"
+        android:layout_marginTop="87dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Happy"
+        android:id="@+id/happyButton"
+        android:layout_alignTop="@+id/mediButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=">"
+        android:id="@+id/nextButton"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="&lt;"
+        android:id="@+id/prevButton"
+        android:layout_alignTop="@+id/nextButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meditation"
+        android:id="@+id/mediButton"
+        android:layout_marginTop="71dp"
+        android:layout_below="@+id/pauseButton"
+        android:layout_alignLeft="@+id/pauseButton"
+        android:layout_alignStart="@+id/pauseButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        android:id="@+id/pauseButton"
+        android:layout_alignTop="@+id/prevButton"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="300pt"
+        android:layout_height="100pt"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:minHeight="300dp" />
 </RelativeLayout>
