@@ -29,10 +29,11 @@ public class MainActivity extends Activity implements
     private static final String CLIENT_ID = "4976a9e391f74baebbc1d44e515b6a2e";
     // TODO: Replace with your redirect URI
     private static final String REDIRECT_URI = "spotifytester://callback";
-
+    private double count=0;
     private Player mPlayer;
     private IOSocket socket;
     private String mood;
+    private String previosMood= "nothing";
     private int someVariable = 0;
     private TextView moodState;
     private ImageView img;
@@ -61,10 +62,26 @@ public class MainActivity extends Activity implements
             public void onClick(View v) {
                 moodState = (TextView) findViewById(R.id.textView);
                 moodState.setText(mood);
-                if (mood.equals("engagement")) {
+                if (mood.equals("meditation")) {
                     img.setImageResource(R.drawable.meditation);
-                } else if (mood.equals("happy")) {
+                    mPlayer.setShuffle(true);
+                    mPlayer.play("spotify:user:spotify:playlist:1oXl0OHlE1mPDChMa8Y0Ax");
+                } else if (mood.equals("excitement")) {
                     img.setImageResource(R.drawable.happy);
+                    mPlayer.setShuffle(true);
+                    mPlayer.play("spotify:user:spotify:playlist:1B9o7mER9kfxbmsRH9ko4z");
+                } else if (mood.equals("bored")) {
+                    img.setImageResource(R.drawable.bored);
+                    mPlayer.setShuffle(true);
+                    mPlayer.play("spotify:user:spotify:playlist:2U3mZqDktE7UJ1gE4eVoUv");
+                } else if (mood.equals("frustration")) {
+                    img.setImageResource(R.drawable.frustration);
+                    mPlayer.setShuffle(true);
+                    mPlayer.play("spotify:user:spotify:playlist:5eSMIpsnkXJhXEPyRQCTSc");
+                } else if (mood.equals("engagement")) {
+                    img.setImageResource(R.drawable.engagement);
+                    mPlayer.setShuffle(true);
+                    mPlayer.play("spotify:user:spotify:playlist:5cdgwETxybr7tWcr7RTiCO");
                 }
             }
         });
@@ -86,8 +103,9 @@ public class MainActivity extends Activity implements
                         mPlayer = player;
                         mPlayer.addConnectionStateCallback(MainActivity.this);
                         mPlayer.addPlayerNotificationCallback(MainActivity.this);
-                        mPlayer.setShuffle(true);
-                        mPlayer.play("spotify:user:spotify:playlist:1oXl0OHlE1mPDChMa8Y0Ax");
+                       /* mPlayer.setShuffle(true);
+                        mPlayer.play("spotify:user:spotify:playlist:1oXl0OHlE1mPDChMa8Y0Ax");*/
+                        checkMood();
                     }
 
                     @Override
@@ -97,16 +115,16 @@ public class MainActivity extends Activity implements
                 });
             }
         };
-        Button happyButton = (Button) findViewById(R.id.happyButton);
+    /*    Button happyButton = (Button) findViewById(R.id.happyButton);
         happyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayer.setShuffle(true);
                 mPlayer.play("spotify:user:spotify:playlist:1B9o7mER9kfxbmsRH9ko4z");
-                mood = "happy";
+                mood = "engagement"; //debugging
             }
         });
-
+*/
 
         Button nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -122,15 +140,7 @@ public class MainActivity extends Activity implements
                 mPlayer.pause();
             }
         });
-        Button mediButton = (Button) findViewById(R.id.mediButton);
-        mediButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPlayer.setShuffle(true);
-                mPlayer.play("spotify:user:spotify:playlist:1oXl0OHlE1mPDChMa8Y0Ax");
-                mood = "meditation";
-            }
-        });
+
     }
 
 
@@ -197,8 +207,18 @@ public class MainActivity extends Activity implements
 
             @Override
             public void on(String event, JSONObject... data) {
-                Log.d("test123",event);
+
                 mood = event;
+                count++;
+
+                Log.d("test123", String.valueOf(count));
+                if(count>=120)
+                {
+                    count=0;
+                    //call function
+                    Log.d("mood",event);
+                    checkMood();
+                }
             }
 
             @Override
@@ -213,5 +233,50 @@ public class MainActivity extends Activity implements
         });
 
         socket.connect();
+    }
+    public void checkMood()
+    {
+        //if mood changes change music otherwise stay the same
+        moodState = (TextView) findViewById(R.id.textView);
+        if(!previosMood.equals(mood)) {
+            Log.d("previous",previosMood);
+
+            if (mood.equals("meditation")) {
+                img.setImageResource(R.drawable.meditation);
+                mPlayer.setShuffle(true);
+                mPlayer.play("spotify:user:spotify:playlist:1oXl0OHlE1mPDChMa8Y0Ax");
+                Log.d("currentMood", mood);
+                moodState.setText(mood);
+                previosMood=mood;
+            } else if (mood.equals("excitement")) {
+                img.setImageResource(R.drawable.happy);
+                mPlayer.setShuffle(true);
+                mPlayer.play("spotify:user:spotify:playlist:1B9o7mER9kfxbmsRH9ko4z");
+                Log.d("currentMood", mood);
+                moodState.setText(mood);
+                previosMood=mood;
+            } else if (mood.equals("bored")) {
+                img.setImageResource(R.drawable.bored);
+                mPlayer.setShuffle(true);
+                mPlayer.play("spotify:user:spotify:playlist:2U3mZqDktE7UJ1gE4eVoUv");
+                Log.d("currentMood", mood);
+                moodState.setText(mood);
+                previosMood=mood;
+            } else if (mood.equals("frustration")) {
+                img.setImageResource(R.drawable.frustration);
+                mPlayer.setShuffle(true);
+                mPlayer.play("spotify:user:spotify:playlist:5eSMIpsnkXJhXEPyRQCTSc");
+                moodState.setText(mood);
+                previosMood=mood;
+            } else if (mood.equals("engagement")) {
+                img.setImageResource(R.drawable.engagement);
+                mPlayer.setShuffle(true);
+                mPlayer.play("spotify:user:spotify:playlist:5cdgwETxybr7tWcr7RTiCO");
+                Log.d("currentMood", mood);
+                moodState.setText(mood);
+                previosMood=mood;
+            }
+
+        }
     }
 }
